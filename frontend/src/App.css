@@ -1,349 +1,478 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-}
-#root {
-  min-height: 100vh;
-}
+/* ==========================================================================
+   Base & Globals
+   ========================================================================== */
 
-/* Estilos gerais */
-.App {
-  text-align: center;
-  padding: 2rem;
-}
-
-.cta-button {
-  display: inline-block;
-  padding: 10px 20px;
-  background-color: #ff5500;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  margin-top: 1rem;
-}
-
-/* Room Selection */
-.room-selection {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-.rooms-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
-}
-
-.room-card {
-  background: #f5f5f5;
-  border-radius: 10px;
-  padding: 20px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-
-.room-card:hover {
-  transform: translateY(-5px);
-  background: #e0e0e0;
-}
-
-/* Chat */
-.chat-container {
-  max-width: 800px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  height: 90vh;
-}
-
-.back-button {
-  background: none;
-  border: none;
-  color: #666;
-  cursor: pointer;
-  margin-right: 15px;
-}
-
-/* Cabeçalho */
-.chat-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid #333;
-}
-
-.user-info {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-}
-
-.logout-btn {
-  padding: 5px 15px;
-  background: #ff3333;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.logout-btn:hover {
-  background: #ff0000;
-}
-
-/* Área de mensagens */
-.messages {
-  height: 500px;
-  overflow-y: auto;
-  margin-bottom: 20px;
-  padding: 15px;
-  background: #222;
-  border-radius: 8px;
-  scrollbar-width: thin;
-  scrollbar-color: #444 #222;
-}
-
-/* Personalização da scrollbar */
-.messages::-webkit-scrollbar {
-  width: 8px;
-}
-
-.messages::-webkit-scrollbar-track {
-  background: #222;
-}
-
-.messages::-webkit-scrollbar-thumb {
-  background-color: #444;
-  border-radius: 20px;
-}
-
-/* Estilos das mensagens */
-.message {
-  margin: 15px 0;
-  padding: 12px 15px;
-  border-radius: 8px;
-  max-width: 70%;
-  word-wrap: break-word;
-}
-
-.message-header {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
-  font-size: 0.9em;
-}
-
-.message-time {
-  color: #aaa;
-  font-size: 0.8em;
-}
-
-.my-message {
-  background: linear-gradient(135deg, #FF0000, #990000); /* Gradiente vermelho da FURIA */
-  color: white;
-  margin-left: auto;
-}
-
-.other-message {
-  background: #333;
-  margin-right: auto;
-  border-bottom-left-radius: 0;
-}
-
-/* Formulário de mensagem */
-.message-form {
-  display: flex;
-  gap: 10px;
-}
-
-.message-form input {
-  flex-grow: 1;
-  padding: 12px 15px;
-  border: none;
-  border-radius: 20px;
-  background: #333;
-  color: #fff;
-}
-
-.message-form button {
-  padding: 12px 20px;
-  background: #0062cc;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.message-form button:hover {
-  background: #0052b3;
-}
-
-
-/* Estilo para botão desabilitado */
-button:disabled {
-  background: #555 !important;
-  cursor: not-allowed;
-}
-
-/* Estilo para mensagens sendo enviadas */
-.message-sending {
-  opacity: 0.8;
-}
-
-.message-sending .message-time {
-  font-style: italic;
-}
-
-/* Efeito de loading no botão */
-.sending {
-  position: relative;
-}
-
-.sending::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 16px;
-  height: 16px;
-  border: 2px solid rgba(255,255,255,0.3);
-  border-radius: 50%;
-  border-top-color: #fff;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-/* Melhorias no input */
-.message-form input:focus {
-  outline: none;
-  box-shadow: 0 0 0 2px #0062cc;
-}
-
-
-.username-field {
-  margin-bottom: 15px;
-}
-
-.username-available {
-  color: green;
-  font-size: 0.8em;
-}
-
-.username-taken {
-  color: red;
-  font-size: 0.8em;
-}
-
-
-.auth-container {
-  max-width: 400px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: #1a1a1a;
-  border-radius: 8px;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-}
-
-.form-group input {
-  width: 100%;
-  padding: 0.5rem;
-  border-radius: 4px;
-  border: 1px solid #333;
-}
-
-.text-success {
-  color: #4caf50;
-}
-
-.text-danger {
-  color: #f44336;
-}
-
-.alert {
-  padding: 0.75rem;
-  margin: 1rem 0;
-  border-radius: 4px;
-}
-
-.alert-danger {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-.date-divider {
-  text-align: center;
-  margin: 15px 0;
-  color: #666;
-  font-size: 0.9rem;
-  position: relative;
-}
-
-.date-divider::before,
-.date-divider::after {
-  content: "";
-  position: absolute;
-  top: 50%;
-  width: 30%;
-  height: 1px;
-  background: #ddd;
-}
-
-.date-divider::before {
-  left: 0;
-}
-
-.date-divider::after {
-  right: 0;
-}
-
-.no-messages {
-  text-align: center;
-  color: #999;
-  padding: 20px;
-  font-style: italic;
-}
-
-
-.loading-messages {
-  padding: 20px;
-  text-align: center;
-  color: #666;
-}
-
-.error-message {
-  background-color: #ffebee;
-  color: #d32f2f;
-  padding: 10px;
-  margin: 10px 0;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.error-message button {
-  background: none;
-  border: none;
-  color: #d32f2f;
-  cursor: pointer;
-}
+   body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Adicionado fallbacks comuns */
+    line-height: 1.5; /* Melhora legibilidade */
+    background-color: #f0f2f5; /* Um fundo base suave, ajuste se necessário */
+    color: #333; /* Cor de texto padrão */
+  }
+  
+  #root {
+    min-height: 100vh;
+    display: flex; /* Útil para layouts de página inteira */
+    flex-direction: column; /* Útil para layouts de página inteira */
+  }
+  
+  /* ==========================================================================
+     Layout Principal da App
+     ========================================================================== */
+  
+  .App {
+    text-align: center;
+    padding: 2rem;
+    flex-grow: 1; /* Garante que o conteúdo ocupe espaço se #root for flex */
+  }
+  
+  /* ==========================================================================
+     Componentes Comuns / Utilitários
+     ========================================================================== */
+  
+  /* Botão de Chamada para Ação (Call to Action) */
+  .cta-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #ff5500; /* Cor tema FURIA */
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    margin-top: 1rem;
+    border: none; /* Adicionado para consistência */
+    cursor: pointer; /* Adicionado para consistência */
+    transition: background-color 0.3s; /* Transição suave */
+  }
+  
+  .cta-button:hover {
+    background-color: #e04b00; /* Tom mais escuro no hover */
+  }
+  
+  /* Estilo genérico para botão desabilitado */
+  button:disabled {
+    background-color: #555 !important; /* Cor mais escura para indicar desabilitado */
+    cursor: not-allowed;
+    opacity: 0.7; /* Adiciona opacidade */
+  }
+  
+  /* Indicadores de sucesso/erro (texto) */
+  .text-success {
+    color: #4caf50; /* Verde */
+  }
+  
+  .text-danger {
+    color: #f44336; /* Vermelho */
+  }
+  
+  /* Alertas (banners de mensagem) */
+  .alert {
+    padding: 0.75rem 1rem; /* Ajuste de padding */
+    margin: 1rem 0;
+    border-radius: 4px;
+    border: 1px solid transparent; /* Borda base */
+  }
+  
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+  }
+  
+  /* Mensagem de Erro Específica (dentro do App.css) */
+  .error-message {
+    background-color: #ffebee;
+    color: #d32f2f;
+    padding: 10px 15px; /* Ajuste de padding */
+    margin: 10px 0;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.9em; /* Tamanho um pouco menor */
+  }
+  
+  .error-message button {
+    background: none;
+    border: none;
+    color: #d32f2f;
+    cursor: pointer;
+    padding: 0 0 0 10px; /* Espaçamento para o botão fechar */
+    font-size: 1.1em; /* Tamanho do 'x' se usar um caractere */
+  }
+  
+  /* ==========================================================================
+     Estilos de Autenticação (Login/Signup)
+     Nota: Considere mover para index.css se usar apenas nas páginas de auth.
+     ========================================================================== */
+  
+  .auth-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #1a1a1a; /* Fundo escuro para contraste */
+    border-radius: 8px;
+    color: #f0f2f5; /* Texto claro */
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem; /* Aumentado espaço */
+  }
+  
+  .form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500; /* Adicionado peso */
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px 12px; /* Ajuste de padding */
+    border-radius: 4px;
+    border: 1px solid #444; /* Borda mais escura */
+    background-color: #333; /* Fundo do input */
+    color: #fff; /* Texto do input */
+    box-sizing: border-box; /* Garante que padding não aumente a largura */
+  }
+  
+  .form-group input:focus {
+    outline: none;
+    border-color: #ff5500; /* Destaque FURIA no foco */
+    box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.5); /* Sombra externa suave */
+  }
+  
+  .username-field { /* Classe específica se precisar de margem extra */
+    margin-bottom: 1.5rem;
+  }
+  
+  .username-available {
+    color: #4caf50; /* Verde */
+    font-size: 0.85em; /* Ajuste de tamanho */
+    margin-top: 0.3rem; /* Espaço acima */
+    display: block; /* Garante que o espaço funcione */
+  }
+  
+  .username-taken {
+    color: #f44336; /* Vermelho */
+    font-size: 0.85em;
+    margin-top: 0.3rem;
+    display: block;
+  }
+  
+  /* ==========================================================================
+     Seleção de Sala (Room Selection)
+     ========================================================================== */
+  
+  .room-selection {
+    max-width: 800px;
+    margin: 2rem auto; /* Adicionado margem superior */
+    padding: 20px;
+    background-color: #fff; /* Fundo branco para esta seção */
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+  }
+  
+  .rooms-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .room-card {
+    background: #f5f5f5;
+    border-radius: 10px;
+    padding: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-out, box-shadow 0.2s ease-out; /* Transição suave */
+    border: 1px solid #e0e0e0; /* Borda sutil */
+  }
+  
+  .room-card:hover {
+    transform: translateY(-5px);
+    background: #e0e0e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15); /* Sombra mais pronunciada */
+  }
+  
+  /* ==========================================================================
+     Container do Chat
+     ========================================================================== */
+  
+  .chat-container {
+    max-width: 800px;
+    margin: 1rem auto; /* Margem ajustada */
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 40px); /* Ocupa altura menos um pouco de margem */
+    max-height: 90vh; /* Limite máximo */
+    background-color: #1c1c1c; /* Fundo escuro para o chat */
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    overflow: hidden; /* Evita que conteúdo transborde o raio */
+    color: #e0e0e0; /* Cor de texto padrão para o chat */
+  }
+  
+  /* ==========================================================================
+     Cabeçalho do Chat (Chat Header)
+     ========================================================================== */
+  
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px; /* Padding ajustado */
+    border-bottom: 1px solid #333;
+    background-color: #2a2a2a; /* Fundo levemente diferente para o header */
+  }
+  
+  .chat-header h2 { /* Estilo para o título da sala */
+    margin: 0;
+    font-size: 1.2em;
+    color: #ff5500; /* Cor FURIA */
+  }
+  
+  .back-button {
+    background: none;
+    border: none;
+    color: #ccc; /* Cor mais clara */
+    cursor: pointer;
+    margin-right: 15px;
+    font-size: 1.5em; /* Ícone maior */
+    padding: 0; /* Remove padding extra */
+    line-height: 1; /* Alinha melhor o ícone */
+  }
+  
+  .back-button:hover {
+    color: #fff;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 0.9em;
+  }
+  
+  .logout-btn {
+    padding: 6px 12px; /* Padding ajustado */
+    background: #cc0000; /* Vermelho mais escuro */
+    color: white;
+    border: none;
+    border-radius: 15px; /* Borda mais arredondada */
+    cursor: pointer;
+    transition: background-color 0.3s; /* Transição */
+    font-size: 0.9em;
+  }
+  
+  .logout-btn:hover {
+    background: #ff0000; /* Vermelho mais vivo no hover */
+  }
+  
+  /* ==========================================================================
+     Área de Mensagens (Messages Area)
+     ========================================================================== */
+  
+  .messages {
+    flex-grow: 1; /* Ocupa o espaço restante */
+    overflow-y: auto;
+    padding: 15px 20px; /* Padding ajustado */
+    background: #1c1c1c; /* Mesmo fundo do container */
+    scrollbar-width: thin;
+    scrollbar-color: #444 #222;
+  }
+  
+  /* Scrollbar Webkit */
+  .messages::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .messages::-webkit-scrollbar-track {
+    background: #222;
+    border-radius: 10px; /* Borda arredondada */
+  }
+  
+  .messages::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 10px;
+  }
+  
+  .messages::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* Leve mudança no hover */
+  }
+  
+  /* Divisor de Data */
+  .date-divider {
+    text-align: center;
+    margin: 20px 0; /* Margem aumentada */
+    color: #777; /* Cor mais sutil */
+    font-size: 0.85rem;
+    position: relative;
+    text-transform: capitalize; /* Ex: 'Hoje', 'Ontem' */
+  }
+  
+  /* Linhas do divisor */
+  .date-divider::before,
+  .date-divider::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    width: 35%; /* Aumentado um pouco */
+    height: 1px;
+    background: #444; /* Linha mais escura */
+  }
+  
+  .date-divider::before {
+    left: 5%; /* Afasta um pouco das bordas */
+  }
+  
+  .date-divider::after {
+    right: 5%;
+  }
+  
+  /* Mensagens de Status (sem mensagens, carregando) */
+  .no-messages,
+  .loading-messages {
+    text-align: center;
+    color: #888; /* Cor sutil */
+    padding: 30px 20px; /* Padding aumentado */
+    font-style: italic;
+    height: 100%; /* Tenta centralizar se for o único conteúdo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* ==========================================================================
+     Estilos das Mensagens Individuais
+     ========================================================================== */
+  
+  .message {
+    margin-bottom: 15px; /* Apenas margem inferior */
+    padding: 10px 15px; /* Padding ajustado */
+    border-radius: 12px; /* Bordas mais arredondadas */
+    max-width: 75%; /* Levemente maior */
+    word-wrap: break-word;
+    line-height: 1.4; /* Espaçamento entre linhas */
+    position: relative; /* Para possíveis elementos futuros */
+  }
+  
+  .message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinha verticalmente */
+    margin-bottom: 5px;
+    font-size: 0.85em; /* Tamanho ajustado */
+  }
+  
+  .message-header strong { /* Nome do usuário */
+    font-weight: 600; /* Negrito mais forte */
+    color: #ffb800; /* Um toque de cor (opcional) */
+  }
+  
+  .message-time {
+    color: #999; /* Cor mais sutil */
+    font-size: 0.8em;
+    margin-left: 10px; /* Espaço entre nome e hora */
+  }
+  
+  /* Mensagem do Usuário Logado */
+  .my-message {
+    background: linear-gradient(135deg, #D62828, #9D0208); /* Ajuste no gradiente FURIA */
+    color: white;
+    margin-left: auto; /* Alinha à direita */
+    border-bottom-right-radius: 4px; /* Detalhe de "balão" */
+  }
+  
+  .my-message .message-header strong {
+    color: #fff; /* Usuário branco na própria mensagem */
+  }
+  
+  /* Mensagem de Outros Usuários */
+  .other-message {
+    background: #333;
+    color: #e0e0e0;
+    margin-right: auto; /* Alinha à esquerda */
+    border-bottom-left-radius: 4px; /* Detalhe de "balão" */
+  }
+  
+  /* Estilo para mensagem sendo enviada (Otimista) */
+  .message-sending {
+    opacity: 0.7; /* Mais sutil que 0.8 */
+  }
+  
+  .message-sending .message-time::before { /* Indicador de envio */
+    content: "Enviando... "; /* Texto indicativo */
+    font-style: italic;
+  }
+  
+  /* ==========================================================================
+     Formulário de Envio de Mensagem
+     ========================================================================== */
+  
+  .message-form {
+    display: flex;
+    gap: 10px;
+    padding: 15px 20px; /* Padding ajustado */
+    background-color: #2a2a2a; /* Mesmo fundo do header */
+    border-top: 1px solid #333;
+  }
+  
+  .message-form input {
+    flex-grow: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 20px;
+    background: #3f3f3f; /* Input levemente mais claro */
+    color: #fff;
+    font-size: 1em; /* Tamanho da fonte padrão */
+  }
+  
+  .message-form input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(255, 85, 0, 0.6); /* Destaque FURIA */
+  }
+  
+  .message-form button {
+    padding: 10px 20px; /* Padding ajustado */
+    background: #ff5500; /* Cor FURIA */
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-weight: 600; /* Botão mais destacado */
+  }
+  
+  .message-form button:hover:not(:disabled) { /* Hover apenas se não estiver desabilitado */
+    background: #e04b00; /* Tom mais escuro */
+  }
+  
+  /* Botão de Envio com Loading */
+  .message-form button.sending {
+    position: relative;
+    color: transparent; /* Esconde o texto "Enviar" */
+  }
+  
+  .message-form button.sending::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Centraliza perfeitamente */
+    width: 18px; /* Tamanho do spinner */
+    height: 18px;
+    border: 3px solid rgba(255, 255, 255, 0.3); /* Borda do spinner */
+    border-radius: 50%;
+    border-top-color: #fff; /* Cor da parte que gira */
+    animation: spin 0.8s linear infinite; /* Animação mais rápida */
+  }
+  
+  /* ==========================================================================
+     Animações
+     ========================================================================== */
+  
+  @keyframes spin {
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
